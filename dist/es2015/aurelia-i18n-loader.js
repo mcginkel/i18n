@@ -1,14 +1,6 @@
-// aurelia-i18n-loader
-// an implementation of an i18next Backend that uses the aurelia loader to load the json translation files
-// based on i18next-xhr-backend
-//
-// usage:
-// aurelia.use.plugin('aurelia-i18n', (instance) => {
-//    // register backend plugin
-//    instance.i18next.use(Backend.with(aurelia.loader));
+var _class, _temp;
 
-export class Backend {
-  static loader = null; // static loader to support passing the aurelia-loader
+export let Backend = (_temp = _class = class Backend {
 
   static with(loader) {
     this.loader = loader;
@@ -50,8 +42,7 @@ export class Backend {
   }
 
   loadUrl(url, callback) {
-    this.constructor.loader.loadText(url)
-    .then(response=>{
+    this.constructor.loader.loadText(url).then(response => {
       let ret;
       let err;
       try {
@@ -61,21 +52,17 @@ export class Backend {
       }
       if (err) return callback(err, false);
       callback(null, ret);
-    },
-    response=>{
-      return callback('failed loading ' + url, false /* no retry */);
+    }, response => {
+      return callback('failed loading ' + url, false);
     });
   }
 
-  create(languages, namespace, key, fallbackValue) {
-    // create is not (yet) supported
-  }
-}
+  create(languages, namespace, key, fallbackValue) {}
+}, _class.loader = null, _temp);
 
 Backend.type = 'backend';
 export default Backend;
 
-// helper functions
 let arr = [];
 let each = arr.forEach;
 let slice = arr.slice;
@@ -90,7 +77,7 @@ function getDefaults() {
 }
 
 function defaults(obj) {
-  each.call(slice.call(arguments, 1), function(source) {
+  each.call(slice.call(arguments, 1), function (source) {
     if (source) {
       for (let prop in source) {
         if (obj[prop] === undefined) obj[prop] = source[prop];
